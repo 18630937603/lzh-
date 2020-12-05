@@ -1,0 +1,412 @@
+name = input('请输入您要打开的txt文件名（与exe同一目录下）：')
+try:  # 从记事本文件导入变量
+    with open('./%s.txt' % name, 'r', encoding='UTF-8') as lines:
+        array = lines.readlines()
+
+        attack_text = array[2].strip('\n')
+        baseattack_text = array[3].strip('\n')
+        featherattack_text = array[4].strip('\n')
+        crithitchance_text = array[5].strip('\n')
+        crithitdamage_text = array[6].strip('\n')
+        elemaster_text = array[7].strip('\n')
+        physicalbuff_text = array[8].strip('\n')
+        elebuff_text = array[9].strip('\n')
+        normalattackbuff_text = array[10].strip('\n')
+        skillbuff_text = array[11].strip('\n')
+        directlybuff_text = array[12].strip('\n')
+        magicfour_text = array[13].strip('\n')
+
+        percentattack_modifytext = array[17].strip('\n')
+        baseattack_modifytext = array[18].strip('\n')
+        featherattack_modifytext = array[19].strip('\n')
+        crithitchance_modifytext = array[20].strip('\n')
+        crithitdamage_modifytext = array[21].strip('\n')
+        elemaster_modifytext = array[22].strip('\n')
+        physicalbuff_modifytext = array[23].strip('\n')
+        elebuff_modifytext = array[24].strip('\n')
+        normalattackbuff_modifytext = array[25].strip('\n')
+        skillbuff_modifytext = array[26].strip('\n')
+        directlybuff_modifytext = array[27].strip('\n')
+        magicfour_modifytext = array[28].strip('\n')
+
+        skillrate_text = array[32].strip('\n')
+        phyeletype_text = array[33].strip('\n')
+        normalskilltype_text = array[34].strip('\n')
+        characterlevel_text = array[35].strip('\n')
+        monlevel_text = array[36].strip('\n')
+        defensedecrease_text = array[37].strip('\n')
+        resist_dec_text = array[38].strip('\n')
+
+        attack2_text = array[43].strip('\n')
+        baseattack2_text = array[44].strip('\n')
+        basechchance_text = array[45].strip('\n')
+        basechdamage_text = array[46].strip('\n')
+
+        attack = float(attack_text[13:])
+        base_atk = float(baseattack_text[10:])
+        con_atk = float(featherattack_text[27:])
+        c_h_chance = float(crithitchance_text[10:])
+        c_h_damage = float(crithitdamage_text[11:])
+        ele_master = float(elemaster_text[5:])
+        phy_buff = float(physicalbuff_text[13:])
+        ele_buff = float(elebuff_text[13:])
+        nor_buff = float(normalattackbuff_text[18:])
+        skl_buff = float(skillbuff_text[18:])
+        dir_buff = float(directlybuff_text[44:])
+        fire4 = int(magicfour_text[19:20])
+
+        pct_atk_m = float(percentattack_modifytext[13:])
+        base_atk_m = float(baseattack_modifytext[10:])
+        con_atk_m = float(featherattack_modifytext[16:])
+        c_h_chance_m = float(crithitchance_modifytext[10:])
+        c_h_damage_m = float(crithitdamage_modifytext[11:])
+        ele_master_m = float(elemaster_modifytext[5:])
+        phy_buff_m = float(physicalbuff_modifytext[13:])
+        ele_buff_m = float(elebuff_modifytext[13:])
+        nor_buff_m = float(normalattackbuff_modifytext[18:])
+        skl_buff_m = float(skillbuff_modifytext[18:])
+        dir_buff_m = float(directlybuff_modifytext[13:])
+        fire4_2 = int(magicfour_modifytext[19:20])
+
+        skill_rate = float(skillrate_text[15:])
+        phy_ele_type = int(phyeletype_text[20:])
+        nor_skl_type = int(normalskilltype_text[24:])
+        char_lvl = int(characterlevel_text[10:])
+        mon_lvl = int(monlevel_text[9:])
+        def_dec = float(defensedecrease_text[36:])
+
+        attack_2 = int(attack2_text[23:])
+        base_atk_2 = int(baseattack2_text[10:])
+        base_chchance = float(basechchance_text[14:])
+        base_chdamage = float(basechdamage_text[15:])
+
+except ValueError:
+    print('记事本文件数据读入异常，请重新下载！')
+
+print('''
+################################################################
+#                                                              #
+#                Genshin Impact Damage Calculator              #
+#                          Author:LZH                          #
+#                                                              #
+################################################################
+''')
+
+print("您当前计算的角色为：", name)
+print()
+temp_dps = 1
+pct_atk = (attack - con_atk) / base_atk
+pct_atk_2 = attack_2 / base_atk_2
+
+alter_string = ""
+
+if pct_atk_m != 0:
+    alter_string = alter_string + "增加了%.5g%%攻击力，" % (pct_atk_m * 100)
+if base_atk_m != 0:
+    alter_string = alter_string + "增加了%d点基础攻击力，" % base_atk_m
+if con_atk_m != 0:
+    alter_string = alter_string + "增加了%d点词缀攻击力，" % con_atk_m
+if c_h_chance_m != 0:
+    alter_string = alter_string + "增加了%.5g%%暴击率，" % (c_h_chance_m * 100)
+if c_h_damage_m != 0:
+    alter_string = alter_string + "增加了%.5g%%暴击伤害，" % (c_h_damage_m * 100)
+if dir_buff_m != 0:
+    alter_string = alter_string + "增加了%.5g%%直接伤害加成，" % (dir_buff_m * 100)
+if phy_buff_m != 0:
+    alter_string = alter_string + "增加了%.5g%%物理伤害加成，" % (phy_buff_m * 100)
+if ele_buff_m != 0:
+    alter_string = alter_string + "增加了%.5g%%元素伤害加成，" % (ele_buff_m * 100)
+if nor_buff_m != 0:
+    alter_string = alter_string + "增加了%.5g%%普通攻击与重击伤害加成，" % (nor_buff_m * 100)
+if skl_buff_m != 0:
+    alter_string = alter_string + "增加了%.5g%%元素战技与爆发伤害加成，" % (skl_buff_m * 100)
+if ele_master_m != 0:
+    alter_string = alter_string + "增加了%d点元素精通，" % ele_master_m
+if fire4_2 - fire4 == 1:
+    alter_string = alter_string + "穿戴魔女四件套，"
+if fire4_2 - fire4 == -1:
+    alter_string = alter_string + "脱下魔女四件套，"
+
+
+def alter_critical():
+    # 添加暴击率和暴击伤害乘区
+    global temp_dps
+    temp_dps = temp_dps * (
+            1 + (c_h_chance + c_h_chance_m) * (c_h_damage + c_h_damage_m)) / (
+                       1 + c_h_chance * c_h_damage)
+
+
+def alter_attack():
+    # 添加面板攻击力乘区
+    global temp_dps
+    temp_dps = temp_dps * ((base_atk + base_atk_m) * (
+            pct_atk + pct_atk_m) + con_atk + con_atk_m) / (
+                       base_atk * pct_atk + con_atk)
+
+
+def alter_dir_buff():
+    # 添加直接伤害加成乘区
+    global temp_dps
+    temp_dps = temp_dps * (1 + (dir_buff + dir_buff_m)) / (1 + dir_buff)
+
+
+def dps_calculator():
+    # 添加元素伤害加成乘区，并显示最终结果
+    global temp_dps
+    temp_physical_normal_damage = temp_dps * (
+            1 + phy_buff + phy_buff_m + nor_buff + nor_buff_m) / (
+                                          1 + phy_buff + nor_buff)
+    temp_element_normal_damage = temp_dps * (
+            1 + ele_buff + ele_buff_m + nor_buff + nor_buff_m) / (
+                                         1 + ele_buff + nor_buff)
+    temp_element_skill_damage = temp_dps * (
+            1 + ele_buff + ele_buff_m + skl_buff + skl_buff_m) / (
+                                        1 + ele_buff + skl_buff)
+    change0 = temp_dps * 100
+    change1 = temp_physical_normal_damage * 100
+    change2 = temp_element_normal_damage * 100
+    change3 = temp_element_skill_damage * 100
+    higher = 2.0 * (1 + (25 * ele_master) / (9 * (ele_master + 1400)) + fire4 * 0.15)
+    higher_modify = 2.0 * (1 + (25 * (ele_master + ele_master_m)) / (
+            9 * ((ele_master + ele_master_m) + 1400)) + fire4_2 * 0.15)
+
+    print('您当前的面板攻击力（白字+绿字）为：%d' % attack)
+    print('您当前的基础攻击力（白字）为：%d' % base_atk)
+    print('您当前羽毛攻击力和圣遗物中所有固定攻击力词缀的和为：%d' % con_atk)
+    print('您当前的暴击率为：%.5g %%' % (c_h_chance * 100))
+    print('您当前的暴击伤害为：%.5g %%' % (c_h_damage * 100))
+    print('您当前的元素精通为：%d' % ele_master)
+    print('您当前的物理伤害加成为：%.5g %%' % (phy_buff * 100))
+    print('您当前的元素伤害加成为：%.5g %%' % (ele_buff * 100))
+    print('您当前的普通攻击/重击伤害加成为：%d %%' % (nor_buff * 100))
+    print('您当前的元素战技/爆发伤害加成为：%d %%' % (skl_buff * 100))
+    print('您当前的直接伤害加成为：%d %%' % (dir_buff * 100))
+    print("{:~^61}".format("主要计算功能"))
+
+    rlist = []
+    pct_atk_r = (base_atk * (pct_atk + 0.15) + con_atk) / (base_atk * pct_atk + con_atk)
+    crit_hit_rate_r = (1 + (c_h_chance + 0.1) * c_h_damage) / (1 + c_h_chance * c_h_damage)
+    c_h_damage_r = (1 + c_h_chance * (c_h_damage + 0.2)) / (1 + c_h_chance * c_h_damage)
+    ele_buff_r = (1 + ele_buff + 0.15) / (1 + ele_buff)
+    rlist.append({'name': '百分比攻击力', 'value': pct_atk_r})
+    rlist.append({'name': '暴击率', 'value': crit_hit_rate_r})
+    rlist.append({'name': '暴击伤害', 'value': c_h_damage_r})
+    rlist.append({'name': '元素加成', 'value': ele_buff_r})
+    rlist.sort(key=lambda x1: x1['value'], reverse=True)
+    print('基于您角色目前属性：')
+    print(
+        '提升属性的优先顺序是： %s > %s > %s > %s' % (rlist[0]['name'], rlist[1]['name'], rlist[2]['name'], rlist[3]['name']))
+    print('提升幅度比例约为 %d : %.4f : %.4f : %.4f' % (
+        1, rlist[1]['value'] / rlist[0]['value'], rlist[2]['value'] / rlist[0]['value'],
+        rlist[3]['value'] / rlist[0]['value']))
+    if alter_string != '':
+        print("如果您" + alter_string)
+        # if phy_buff_m != 0 or nor_buff_m != 0:
+        print("物理普通攻击/重击的每秒伤害会变为原来的", round(change1, 2), "%")
+        # if ele_buff_m != 0 or nor_buff_m != 0:
+        print("元素普通攻击/重击的每秒伤害会变为原来的", round(change2, 2), "%")
+        if ele_master_m != 0 or fire4_2 - fire4 == 1 or fire4_2 - fire4 == -1:
+            print("元素普通攻击/重击触发元素反应的每秒伤害会变为原来的%.5g%%" % (change2 * higher_modify / higher))
+        # if ele_buff_m != 0 or skl_buff_m != 0:
+        print("元素战技/爆发的每秒伤害会变为原来的", round(change3, 2), "%")
+        if ele_master_m != 0 or fire4_2 - fire4 == 1 or fire4_2 - fire4 == -1:
+            print("元素战技/爆发触发元素反应的每秒伤害会变为原来的%.5g%%" % (change3 * higher_modify / higher))
+        # if phy_buff_m == 0 and nor_buff_m == 0 and ele_buff_m == 0 and skl_buff_m == 0:
+        #     print("每秒伤害会变为原来的", round(change0, 2), "%")
+        #     if ele_master_m != 0 or fire4_2 - fire4 == 1 or fire4_2 - fire4 == -1:
+        #         print("触发元素反应的每秒伤害会变为原来的%.5g%%" % (change0 * higher_modify / higher))
+
+
+def damage_calculator():
+    # 具体伤害计算器
+    resist = 0.9
+    attack_m = ((base_atk + base_atk_m) * (pct_atk + pct_atk_m) + con_atk + con_atk_m)
+    ext_dmg = attack * (1 + dir_buff) * skill_rate * ((char_lvl + 100) / (char_lvl + 100 + (mon_lvl + 100) * (1 - def_dec))) * resist
+    ext_dmg_m = attack_m * (1 + dir_buff + dir_buff_m) * skill_rate * ((char_lvl + 100) / (char_lvl + 100 + (mon_lvl + 100) * (1 - def_dec))) * resist
+    exact_physical_damage = (1 + phy_buff + nor_buff) * ext_dmg
+    exact_physical_damage_2 = (1 + phy_buff + phy_buff_m + nor_buff + nor_buff_m) * ext_dmg_m
+    exact_elenormal_damage = (1 + ele_buff + nor_buff) * ext_dmg
+    exact_elenormal_damage_2 = (1 + ele_buff + ele_buff_m + nor_buff + nor_buff_m) * ext_dmg_m
+    exact_skill_damage = (1 + ele_buff + skl_buff) * ext_dmg
+    exact_skill_damage_2 = (1 + ele_buff + ele_buff_m + skl_buff + skl_buff_m) * ext_dmg_m
+    lower = 1.5 * (1 + (25 * ele_master) / (9 * (ele_master + 1400)) + fire4 * 0.15)
+    higher = 2 * (1 + (25 * ele_master) / (9 * (ele_master + 1400)) + fire4 * 0.15)
+    lower_m = 1.5 * (
+            1 + (25 * (ele_master + ele_master_m)) / (9 * (ele_master + ele_master_m + 1400)) + fire4_2 * 0.15)
+    higher_m = 2 * (
+            1 + (25 * (ele_master + ele_master_m)) / (9 * (ele_master + ele_master_m + 1400)) + fire4_2 * 0.15)
+    print('----------------具体伤害值（以下伤害基于人物现属性计算）----------------')
+    print('您当前使用%d级角色攻击%d级丘丘人（10%%全抗性怪物），使用的技能倍率为%.5g%%' % (char_lvl, mon_lvl, skill_rate * 100))
+    if skill_type == 1:
+        print('伤害类型：物理普通攻击')
+        print('伤害为：', int(exact_physical_damage))
+        print('暴击伤害为：', int(exact_physical_damage * (1 + c_h_damage)))
+        if alter_string != '':
+            print('----------------具体伤害值（以下伤害基于改变后属性计算）----------------')
+            print('伤害类型：物理普通攻击')
+            print("如果您" + alter_string)
+            print('伤害为：', int(exact_physical_damage_2))
+            print('暴击伤害为：', int(exact_physical_damage_2 * (1 + c_h_damage + c_h_damage_m)))
+    if skill_type == 2:
+        print('伤害类型：元素普通攻击')
+        print('伤害为：', int(exact_elenormal_damage))
+        print('低倍率元素反应伤害为：', int(exact_elenormal_damage * lower))
+        print('高倍率元素反应伤害为：', int(exact_elenormal_damage * higher))
+        print('暴击伤害为：', int(exact_elenormal_damage * (1 + c_h_damage)))
+        print('低倍率元素反应暴击伤害为：', int(exact_elenormal_damage * (1 + c_h_damage) * lower))
+        print('高倍率元素反应暴击伤害为：', int(exact_elenormal_damage * (1 + c_h_damage) * higher))
+        if alter_string != '':
+            print('----------------具体伤害值（以下伤害基于改变后属性计算）----------------')
+            print('伤害类型：元素普通攻击')
+            print("如果您" + alter_string)
+            print('伤害为：', int(exact_elenormal_damage_2))
+            print('低倍率元素反应伤害为：', int(exact_elenormal_damage_2 * lower_m))
+            print('高倍率元素反应伤害为：', int(exact_elenormal_damage_2 * higher_m))
+            print('暴击伤害为：', int(exact_elenormal_damage_2 * (1 + c_h_damage + c_h_damage_m)))
+            print('低倍率元素反应暴击伤害为：', int(exact_elenormal_damage_2 * (1 + c_h_damage + c_h_damage_m) * lower_m))
+            print('高倍率元素反应暴击伤害为：', int(exact_elenormal_damage_2 * (1 + c_h_damage + c_h_damage_m) * higher_m))
+    if skill_type == 3:
+        print('伤害类型：元素战技/爆发')
+        print('伤害为：', int(exact_skill_damage))
+        print('低倍率元素反应伤害为：', int(exact_skill_damage * lower))
+        print('高倍率元素反应伤害为：', int(exact_skill_damage * higher))
+        print('暴击伤害为：', int(exact_skill_damage * (1 + c_h_damage)))
+        print('低倍率元素反应暴击伤害为：', int(exact_skill_damage * (1 + c_h_damage) * lower))
+        print('高倍率元素反应暴击伤害为：', int(exact_skill_damage * (1 + c_h_damage) * higher))
+        if alter_string != '':
+            print('----------------具体伤害值（以下伤害基于改变后属性计算）----------------')
+            print('伤害类型：元素战技/爆发')
+            print("如果您" + alter_string)
+            print('伤害为：', int(exact_skill_damage_2))
+            print('低倍率元素反应伤害为：', int(exact_skill_damage_2 * lower_m))
+            print('高倍率元素反应伤害为：', int(exact_skill_damage_2 * higher_m))
+            print('暴击伤害为：', int(exact_skill_damage_2 * (1 + c_h_damage + c_h_damage_m)))
+            print('低倍率元素反应暴击伤害为：', int(exact_skill_damage_2 * (1 + c_h_damage + c_h_damage_m) * lower_m))
+            print('高倍率元素反应暴击伤害为：', int(exact_skill_damage_2 * (1 + c_h_damage + c_h_damage_m) * higher_m))
+
+
+# 乘区添加部分
+
+if c_h_chance + c_h_chance_m > 1:
+    print('警告：您改变属性后的暴击率总和超过100%了，为保证计算结果正确，请重新输入')
+else:
+    if c_h_chance_m == 0 and c_h_damage_m == 0:
+        pass
+    else:
+        alter_critical()
+
+if pct_atk_m == 0 and base_atk_m == 0 and con_atk_m == 0:
+    pass
+else:
+    alter_attack()
+
+if dir_buff_m == 0:
+    pass
+else:
+    alter_dir_buff()
+
+dps_calculator()
+
+# 具体伤害计算部分
+
+if skill_rate != 0:
+    if phy_ele_type == 0:
+        skill_type = 1
+    else:
+        if nor_skl_type == 0:
+            skill_type = 2
+        elif nor_skl_type == 1:
+            skill_type = 3
+
+damage_calculator()
+
+
+# 人物毕业属性计算部分
+possibilities_list = []  # 生成一个具有所有权重分配可能性的穷举列表
+total_weight = 220  # 帽子+副词条攻击力、暴击和爆伤的总权重值，相当于2.2件五星圣遗物的主属性量（这是一般人圣遗物毕业的属性量）
+con_atk_2 = 311  # 五星圣遗物羽毛攻击力311
+w1 = total_weight + 1  # w1:攻击力权重
+
+for x in range(w1):
+
+    w1 -= 1
+    w23 = total_weight - w1  # w23：暴击+爆伤权重
+    w2 = w23 + 1  # w2：暴击权重
+
+    for y in range(w2):
+        w2 -= 1
+        w3 = w23 - w2  # w3：爆伤权重
+        possibilities_list.append({'a': w1, 'b': w2, 'c': w3})
+
+p = 0
+a = total_weight
+b = 0
+c = 0
+best_p = 0
+best_temp_dps = 0
+
+# 使用上面生成的权重进行穷举代入计算
+
+for x in range(len(possibilities_list) - 1):
+
+    p = p + 1
+
+    if b * 0.00311 + base_chchance <= 1:  # 防止暴击率超过百分之百
+
+        temp_p_dps = (base_atk_2 * (pct_atk_2 + 0.466 + a * 0.00466) + con_atk_2) * (
+                1 + (b * 0.00311 + base_chchance) * (c * 0.00622 + base_chdamage))
+
+        if temp_p_dps > best_temp_dps:
+            best_temp_dps = temp_p_dps
+            best_p = p - 1
+
+    temp_dict = possibilities_list[p]
+    a = temp_dict['a']
+    b = temp_dict['b']
+    c = temp_dict['c']
+
+# 得出最佳权重
+best_dict = possibilities_list[best_p]
+best_a = best_dict['a']
+best_b = best_dict['b']
+best_c = best_dict['c']
+
+print("{:~^60}".format("人物毕业属性计算"))
+
+print('您输入的基础攻击力（白字）是：', base_atk_2)
+print('您输入的基础暴击率（武器+人物自带）是：', round(base_chchance * 100, 2), '%')
+print('您输入的基础暴击伤害（武器+人物自带）是：', round(base_chdamage * 100, 2), '%')
+print('建议您的面板攻击力堆到：', round(base_atk_2 * (pct_atk_2 + 0.466 + best_a * 0.00466) + con_atk_2))
+print('建议您的面板暴击率堆到：', round((best_b * 0.00311 + base_chchance) * 100, 2), '%')
+print('建议您的面板暴击伤害堆到：', round((best_c * 0.00622 + base_chdamage) * 100, 2), '%')
+
+temp_list = []
+if max(best_a, best_b, best_c) == best_b:
+    hat = '暴击率'
+    temp_list.append({'name': '攻击力', 'value': best_a})
+    temp_list.append({'name': '暴击率', 'value': best_b - 100})
+    temp_list.append({'name': '暴击伤害', 'value': best_c})
+elif max(best_a, best_b, best_c) == best_c:
+    hat = '暴击伤害'
+    temp_list.append({'name': '攻击力', 'value': best_a})
+    temp_list.append({'name': '暴击率', 'value': best_b})
+    temp_list.append({'name': '暴击伤害', 'value': best_c - 100})
+else:
+    hat = '攻击力'
+    temp_list.append({'name': '攻击力', 'value': best_a - 100})
+    temp_list.append({'name': '暴击率', 'value': best_b})
+    temp_list.append({'name': '暴击伤害', 'value': best_c})
+temp_list.sort(key=lambda x1: x1['value'], reverse=True)
+other1 = temp_list[0]['name']
+other2 = temp_list[1]['name']
+other3 = temp_list[2]['name']
+
+print('建议您选择元素伤害空之杯，攻击力时计和%s帽子，圣遗物副词条优先顺序：%s>%s>%s' % (hat, other1, other2, other3))
+
+if best_b + best_c == total_weight:
+    print('上述暴击爆伤只是至少堆到的参考值，请在圣遗物词条允许的情况下尽可能多地按照1:2的比例堆暴击爆伤')
+p_dps = (base_atk_2 * (pct_atk_2 + 0.466 + best_a * 0.00466) + con_atk_2) * (
+        1 + (best_b * 0.00311 + base_chchance) * (best_c * 0.00622 + base_chdamage))
+print('秒伤期望值为%d（用于比较，不是具体秒伤值）' % p_dps)
+print()
+input('输入任意字符结束程序：')
